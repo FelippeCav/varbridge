@@ -1,0 +1,9 @@
+{
+  "name": "VarBridge",
+  "id": "varbridge-local-dev",
+  "api": "1.0.0",
+  "main": "dist/plugin/index.js",
+  "ui": "dist/ui/index.html",
+  "editorType": ["figma"],
+  "permissions": ["currentuser"]
+}
