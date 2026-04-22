@@ -1,73 +1,119 @@
-# React + TypeScript + Vite
+# VarBridge – Figma Variables Exporter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📋 About the Project
 
-Currently, two official plugins are available:
+A **Figma plugin** that exports Variables to **Tailwind v4** and **W3C Design Tokens** — free, open source, no backend required.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Built for designers and developers who want a clean, fast bridge between Figma design tokens and production code.
 
-## React Compiler
+> 🎨 Export your Variables to Tailwind v4 `@theme` CSS or W3C JSON in one click — with native OKLCH color conversion.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🚀 Install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+👉 [Figma Community – VarBridge](https://www.figma.com/community)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+✅ Export Variables to Tailwind v4 `@theme` CSS  
+✅ Export Variables to W3C Design Tokens JSON (Style Dictionary compatible)  
+✅ Native OKLCH color conversion  
+✅ Live code preview with syntax highlight  
+✅ Select collections and modes individually  
+✅ Token prefix and case style customization  
+✅ Copy to clipboard or download as file  
+✅ 100% free — no account, no backend, no limits  
+
+---
+
+## 🚀 Technologies
+
+- React + TypeScript – UI layer  
+- Vite – Build tooling  
+- Zustand – State management  
+- culori – OKLCH color conversion  
+- Figma Plugin API – Variables access  
+
+---
+
+## 📁 Project Structure
+
+```bash
+varbridge/
+│
+├── src/
+│   ├── plugin/        # Figma sandbox code
+│   │   └── index.ts
+│   ├── shared/        # Shared types and transformer
+│   │   ├── transformer.ts
+│   │   └── types.ts
+│   └── ui/            # React interface
+│       ├── components/
+│       │   ├── TabExport.tsx
+│       │   ├── TabPreview.tsx
+│       │   └── TabSettings.tsx
+│       └── store.ts
+├── manifest.json
+├── vite.config.ts
+└── package.json
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🖥️ Development
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Clone the repository:
+
+```bash
+git clone https://github.com/FelippeCav/varbridge.git
+cd varbridge
 ```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Build the plugin:
+
+```bash
+npm run build
+```
+
+Load in Figma: **Plugins → Development → Import plugin from manifest** → select `manifest.json`
+
+---
+
+## 🎯 How it works
+
+1. Open VarBridge in any Figma file with Local Variables
+2. Select which collections to export
+3. Choose your output format — Tailwind v4 or W3C Tokens
+4. Preview the generated code live
+5. Copy or download
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Multi-mode export (Light + Dark simultaneously)  
+- [ ] GitHub/GitLab sync  
+- [ ] Style Dictionary config file export  
+- [ ] Import tokens back to Figma  
+
+---
+
+## 👨‍💻 Author
+
+**Felippe Cavalcante**  
+[GitHub](https://github.com/FelippeCav) • [LinkedIn](https://www.linkedin.com/in/felippe-cavalcante/)
+
+---
+
+## 📝 License
+
+MIT — free to use, modify and distribute.
