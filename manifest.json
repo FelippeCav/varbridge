@@ -8,6 +8,5 @@
   "permissions": ["currentuser"],
   "networkAccess": {
     "allowedDomains": ["none"]
-  },
-  "documentAccess": "dynamic-page"
+  }
 }

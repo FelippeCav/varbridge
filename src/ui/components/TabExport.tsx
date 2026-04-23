@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useStore } from "../store";
 import { toTailwindV4, toW3C } from "../../shared/transformer";
 
@@ -9,6 +10,7 @@ const C = {
 };
 
 export function TabExport() {
+  const [exported, setExported] = useState(false);
   const {
     collections, selectedCollectionIds, activeModeId,
     tokens, format, settings,
@@ -18,20 +20,35 @@ export function TabExport() {
 
   const collColors = [C.accent, C.green, C.amber, "#E879F9", "#38BDF8"];
 
-    function handleExport() {
+  function handleExport() {
     const code = format === "tailwind"
-        ? toTailwindV4(tokens, { prefix: settings.prefix, useOklch: settings.useOklch, includeComments: settings.includeComments })
-        : toW3C(tokens, { useOklch: settings.useOklch, includeComments: settings.includeComments });
+      ? toTailwindV4(tokens, { prefix: settings.prefix, useOklch: settings.useOklch, includeComments: settings.includeComments })
+      : toW3C(tokens, { useOklch: settings.useOklch, includeComments: settings.includeComments });
     setGeneratedCode(code);
+
+    try {
+      const el = document.createElement("textarea");
+      el.value = code;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+    } catch {
+      // silently fail
+    }
+
     parent.postMessage({
-        pluginMessage: {
+      pluginMessage: {
         type: "EXPORT_TOKENS",
         collectionIds: selectedCollectionIds,
         modeId: activeModeId ?? collections[0]?.modes[0]?.modeId ?? "",
         format,
-        }
+      }
     }, "*");
-    }
+
+    setExported(true);
+    setTimeout(() => setExported(false), 2000);
+  }
 
   const totalTokens = collections
     .filter(c => selectedCollectionIds.includes(c.id))
@@ -48,7 +65,6 @@ export function TabExport() {
     <div style={{ overflowY: "auto", maxHeight: 608, paddingBottom: 90 }}>
       <div style={{ padding: "0 16px", marginTop: 13 }}>
 
-        {/* Variables detected */}
         <div style={{ fontSize: 9, fontWeight: 500, color: C.text3, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
           Variables detected
         </div>
@@ -65,7 +81,6 @@ export function TabExport() {
           ))}
         </div>
 
-        {/* Collections */}
         <div style={{ fontSize: 9, fontWeight: 500, color: C.text3, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
           Collections
         </div>
@@ -105,7 +120,6 @@ export function TabExport() {
 
         <div style={{ height: 1, background: C.border, margin: "0 0 12px" }} />
 
-        {/* Export mode */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
           <div style={{ fontSize: 9, fontWeight: 500, color: C.text3, letterSpacing: "0.06em", textTransform: "uppercase" }}>
             Export mode
@@ -129,7 +143,6 @@ export function TabExport() {
 
         <div style={{ height: 1, background: C.border, margin: "0 0 12px" }} />
 
-        {/* Output format */}
         <div style={{ fontSize: 9, fontWeight: 500, color: C.text3, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 8 }}>
           Output format
         </div>
@@ -155,7 +168,6 @@ export function TabExport() {
 
         <div style={{ height: 1, background: C.border, margin: "0 0 12px" }} />
 
-        {/* Options */}
         {([
           { label: "OKLCH colors", key: "useOklch", type: "toggle" },
           { label: "Token prefix", key: "prefix", type: "input" },
@@ -195,7 +207,6 @@ export function TabExport() {
         ))}
       </div>
 
-      {/* Footer */}
       <div style={{
         position: "fixed", bottom: 27, left: 0, width: 340,
         background: C.bg2, padding: "10px 16px 14px",
@@ -213,12 +224,14 @@ export function TabExport() {
         <button
           onClick={handleExport}
           style={{
-            width: "100%", height: 36, background: C.accent, color: "#fff",
+            width: "100%", height: 36,
+            background: exported ? "#1B9960" : C.accent,
+            color: "#fff",
             fontSize: 13, fontWeight: 500, border: "none", borderRadius: 5,
-            cursor: "pointer",
+            cursor: "pointer", transition: "background 0.2s",
           }}
         >
-          Export tokens
+          {exported ? "Copied to clipboard!" : "Export tokens"}
         </button>
       </div>
     </div>
