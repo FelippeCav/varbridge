@@ -1,9 +1,13 @@
 {
   "name": "VarBridge",
-  "id": "varbridge-local-dev",
+  "id": "1629125781231175209",
   "api": "1.0.0",
   "main": "dist/plugin/index.js",
   "ui": "dist/ui/index.html",
   "editorType": ["figma"],
-  "permissions": ["currentuser"]
+  "permissions": ["currentuser"],
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  },
+  "documentAccess": "dynamic-page"
 }
