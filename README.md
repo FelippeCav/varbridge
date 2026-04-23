@@ -12,7 +12,7 @@ Built for designers and developers who want a clean, fast bridge between Figma d
 
 ## 🚀 Install
 
-👉 [Figma Community – VarBridge](https://www.figma.com/community)
+👉 [Figma Community – VarBridge](https://www.figma.com/community/plugin/1629125781231175209)
 
 ---
 
